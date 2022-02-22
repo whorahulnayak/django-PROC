@@ -48,6 +48,10 @@
     {% block script %}
     {% endblock %}
     <script>
+        let loader = document.querySelector('.loader');
+        window.addEventListener('load', function(){
+          loader.style.display = 'none';
+        })
         function showPassword() {
             var x = document.getElementById("password");
             if (x.type === "password") {
