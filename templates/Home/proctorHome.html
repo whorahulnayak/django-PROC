@@ -175,7 +175,7 @@
     {% endfor %}
     {% block body %}
     {% endblock %}
-    <a href="#" style="position:fixed;bottom:0px;right:0px;margin:5px;">help</a>
+    <a href="{% url 'Help' %}" target="_blank" style="position:fixed;bottom:0px;right:0px;margin:5px;">help</a>
     {% block script %}
     {% endblock %}
     <script>
