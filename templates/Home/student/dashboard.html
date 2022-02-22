@@ -1,0 +1,190 @@
+{% extends 'Home/studentHome.html' %}
+{% load static %}
+{% block actived %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+{% block head %}
+<script type="text/javascript">
+  google.charts.load("current", {packages:['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Semester", "SGPA", { role: "style" } ],
+      ["I", {{SGPA1}}, "color: #DC3912"],
+      ["II", {{SGPA2}}, "color: #FF9900"],
+      ["III", {{SGPA3}}, "color: #109618"],
+      ["IV", {{SGPA4}}, "color: #990099"],
+      ["V", {{SGPA5}}, "color: #3366CC"],
+      ["VI", {{SGPA6}}, "color: #B77322"],
+      ["VII", {{SGPA7}}, "color: #DD4477"],
+      ["VIII", {{SGPA8}}, "color: #AAAA11"]
+    ]);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, 1,
+                     { calc: "stringify",
+                       sourceColumn: 1,
+                       type: "string",
+                       role: "annotation" },
+                     2]);
+
+    var options = {
+      title: "Performance comparison(4-yrs)",
+      width: 400,
+      height: 200,
+      bar: {groupWidth: "95%"},
+      legend: { position: "none" },
+      backgroundColor : "#F8F9FA",
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+    chart.draw(view, options);
+}
+</script>
+
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="container">
+        <div class="d-inline-block rounded-circle p-0" style="height:150px;width:150px;">
+        <!--if img present in Db=>display else=>display BMS-logo and form to update Db-->
+            {% if Profilepic %}
+            <img class="d-inline-block rounded-circle p-0" src="{{ MEDIA_URL }}{{Profilepic}}" height="150" width="150" alt="">
+            {% else %}
+            <button type="button" class="btn btn-primary rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Portrait image with red background">
+                <p>Update Image</p>
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="updatePP" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <p>Image with red background and size less than 30Kb</p>
+                        <input type="file" name="sprofilepic" id="sprofilepic" accept="image/*" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="saveImgbtn">Save changes</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="d-inline-block ms-2">
+            <h1 class="mb-0" style="word-wrap:break-word;">
+                {% if Name %}
+                {{Name}}
+                {% else %}
+                <form action="updateSDb" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="Name">
+                    <input type="submit" class="btn btn-outline-primary" value="Update">
+                </form>
+                {% endif %}
+            </h1>
+            <a href="mailto:{{mailid}}" style="text-decoration: none;">{{mailid}}</a>
+        </div>
+        <!--chart-->
+        <div class="d-none d-lg-inline-block float-end p-0">
+            <div id="columnchart_values" style="width: 400px; height: 200px;"></div>
+        </div>
+    </div>
+    <h1>Announcements</h1>
+    <div class="container text-wrap rounded mt-3">
+        {% for a in announcement %}
+        <h3>{{a.Heading}}</h3>
+        <p style="display: inline-block;background:rgba(242, 194, 194, 0.8)">{{a.Date}}</p>
+        <p>{{a.Desc}}</p>
+        <a href="{{a.Link}}" target="_blank">{{a.Link}}</a>
+        <section class="border border-bottom"></section>
+        {% endfor %}
+    </div>
+    <div class="d-inline-block container text-wrap rounded my-3 pt-0">
+        <h3 class="text-dark mt-3">USN</h3>
+        <!--if data present in Db=>display else form to update Db-->
+        {% if USN %}
+        {{USN}}
+        {% else %}
+        <form action="updateSDb" method="post">
+            {% csrf_token %}
+            <input type="text" name="USN" maxlength="10">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+        <section class="border border-bottom"></section>
+        <h3 class="text-dark mt-3">Proctor</h3>
+        <!--if data present in Db=>display else form to update Db-->
+        {% if Pname %}
+        {{Pname}}
+        {% else %}
+        <form action="updateSDb" method="post">
+            {% csrf_token %}
+            <input type="text" name="Pname">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+        <section class="border border-bottom"></section>
+        <h3 class="text-dark mt-3">Branch</h3>
+        {% if Branch %}
+        {{Branch}}
+        {% else %}
+        <form action="updateSDb" method="post">
+            {% csrf_token %}
+            <input type="text" name="Branch">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+        <section class="border border-bottom"></section>
+        <h3 class="text-dark mt-3">Semester</h3>
+        <!--if data present in Db=>display else form to update Db-->
+        {% if Semester %}
+        {{Semester}}
+        {% else %}
+        <form action="updateSDb" method="post">
+            {% csrf_token %}
+            <input type="text" name="Semester">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+        <section class="border border-bottom"></section>
+        <h3 class="text-dark mt-3">Section</h3>
+        <!--if data present in Db=>display else form to update Db-->
+        {% if Section %}
+        {{Section}}
+        {% else %}
+        <form action="updateSDb" method="post">
+            {% csrf_token %}
+            <input type="text" name="Section">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.getElementById('sprofilepic').addEventListener('change', function checkSize(){
+        var input = document.getElementById('sprofilepic');
+        var btn = document.getElementById('saveImgbtn');
+        if (!input.files) {
+            console.error("This browser doesn't seem to support the `files` property of file inputs.");
+        }
+        else {
+            var file = input.files[0];
+            if (file.size > 30*1024){
+                btn.disabled = true;
+                alert("File too large\nFile size should be less than 30Kb");
+            }
+            else{
+                btn.disabled = false;
+            }
+        }
+    });
+</script>
+{% endblock %}

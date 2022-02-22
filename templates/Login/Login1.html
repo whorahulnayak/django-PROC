@@ -1,0 +1,46 @@
+{% extends 'Login/Login.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-5 p-3 " style="
+max-width: 900px;
+display: flex; 
+align-items: center; 
+justify-content: center; 
+flex-direction: column;
+border-radius: 10px;">
+    <h1>Welcome to BMSCE ISE Proctoring system</h1>
+<p>To keep your records updated please login with your college credentials</p>
+<form action="Login2" method="post">
+    {% csrf_token %}
+    <div class="col mx-auto">
+        <input type="submit" class="btn btn-outline-primary my-1" value="Student" style="width: 200px;">
+    </div>
+</form>
+<form action="Login3" method="post">
+    {% csrf_token %}
+    <div class="col mx-auto">
+        <input type="submit" class="btn btn-outline-warning my-1" value="Proctor" style="width: 200px;">
+    </div>
+</form>
+<form action="Login4" method="post">
+    {% csrf_token %}
+    <div class="col mx-auto">
+        <input type="submit" class="btn btn-outline-danger my-1" value="Admin" style="width: 200px;">
+    </div>
+</form>
+<section class="border-top border-dark pt-2 mt-2 mx-0 px-3">
+    <form action="signup" method="post">
+        {% csrf_token %}
+        <div class="col mx-auto">
+            <input type="submit" class="btn btn-outline-dark my-1" value="Sign Up" style="width: 200px;">
+        </div>
+    </form>
+</section>
+
+<h4 class="my-2">If any queries or issues kindly contact</h4>
+<a class="my-2 fs-5" href="mailto:sourabh.is20@bmsce.ac.in">sourabh.is20@bmsce.ac.in</a>
+</div>
+
+{% endblock %}

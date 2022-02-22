@@ -1,0 +1,70 @@
+{% extends 'Home/proctor/manage.html' %}
+
+{% block extension %}
+<h2 style="text-align: center;border-bottom: 1px solid black;">Record Update</h2>
+<form action="Manage" method="post" style="padding-left: 20px;">
+    {% csrf_token %}
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault1" name="input-6" value="Semester">
+        <label class="form-check-label" for="flexCheckDefault1">Semester</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault2" name="input-5" value="Section">
+        <label class="form-check-label" for="flexCheckDefault2">Section</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault3" name="input-4" value="Name">
+        <label class="form-check-label" for="flexCheckDefault3">Name</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault4" name="input-3" value="Phone">
+        <label class="form-check-label" for="flexCheckDefault4">Phone number</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault5" name="input-2" value="Blood">
+        <label class="form-check-label" for="flexCheckDefault5">Blood group</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault6" name="input-1" value="DoB">
+        <label class="form-check-label" for="flexCheckDefault6">DoB</label>
+    </div>
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Select Students</button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">&emsp;Select Students</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <hr class="my-0">
+    <div class="position-relative offcanvas-body" id="studentcheck">
+        <button class="d-inline-block btn btn-primary m-2" type="button" onclick="toggleCheck()">Select all</button>
+            <input type="text" class="position-absolute form-control top-0 end-0 w-50 border border-none m-3 mt-4" id="searchbar" placeholder="search">
+        {% for student in students %}
+        <div class="form-check ms-2">
+            <input class="form-check-input" type="checkbox" id="studentcheck{{forloop.counter}}" name="input{{forloop.counter}}" value="{{student.EmailId}}">
+            <label class="form-check-label" for="studentcheck{{forloop.counter}}">{{student.EmailId}}</label>
+        </div>
+        {% endfor %}
+        <button class="d-inline-block btn btn-primary m-2" type="submit">Mail update form</button>
+    </div>
+    </div>
+</form>
+
+<script>
+    document.getElementById('searchbar').addEventListener('keyup', function(){
+        var input, filter, li, a, i, txtValue;
+        input = document.getElementById("searchbar").value;
+        filter = input.toUpperCase();
+        li = document.getElementById("studentcheck").querySelectorAll('label');
+        lj = document.getElementById("studentcheck").querySelectorAll('div');
+        for (i = 0; i < li.length; i++) {
+            a = li[i].textContent;
+            if (a.toUpperCase().indexOf(filter) > -1) {
+                lj[i].hidden = false;
+            } else {
+                lj[i].hidden = true;
+            }
+        }
+    })
+</script>
+{% endblock %}

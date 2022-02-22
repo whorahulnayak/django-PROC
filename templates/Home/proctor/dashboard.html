@@ -1,0 +1,183 @@
+{% extends 'Home/proctorHome.html' %}
+{% load static %}
+{% block actived %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+
+{% block head %}
+<script type="text/javascript">
+  google.charts.load("current", {packages:['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Year", "No of students", { role: "style" } ],
+      ["I({{x|add:-3}})",{{Y1}} , "color: #DC3912"],
+      ["II({{x|add:-2}})",{{Y2}} , "color: #FF9900"],
+      ["III({{x|add:-1}})",{{Y3}} , "color: #109618"],
+      ["IV({{x}})",{{Y4}} , "color: #990099"],
+      ["Archived",{{A}} , "color: #B77322"],
+    ]);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, 1,
+                     { calc: "stringify",
+                       sourceColumn: 1,
+                       type: "string",
+                       role: "annotation" },
+                     2]);
+
+    var options = {
+      title: "Number of students",
+      width: 400,
+      height: 200,
+      bar: {groupWidth: "95%"},
+      legend: { position: "none" },
+      backgroundColor : "#F8F9FA",
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+    chart.draw(view, options);
+}
+</script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="container">
+        <div class="d-inline-block rounded-circle p-0" style="height:150px;width:150px;">
+            <!--if img present in Db=>display else=>display BMS-logo and form to update Db-->
+                {% if Profilepic %}
+                <img class="d-inline-block rounded-circle p-0" src="{{ MEDIA_URL }}{{Profilepic}}" height="150" width="150" alt="">
+                {% else %}
+                <button type="button" class="btn btn-primary rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Portrait image with red background">
+                    <p>Update Image</p>
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Upload Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="updatePP" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <p>Image with red background and size less than 30Kb</p>
+                            <input type="file" name="pprofilepic" id="pprofilepic" accept="image/*" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="saveImgbtn">Save changes</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+                {% endif %}
+            </div>
+        <div class="d-inline-block ms-2">
+            <h1 class="mb-0">
+                {% if Name %}
+                {{Name}}
+                {% else %}
+                <form action="updatePDb" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="Name">
+                    <input type="submit" class="btn btn-outline-primary" value="Update">
+                </form>
+                {% endif %}
+            </h1>
+            <a href="mailto:{{mailid}}" style="text-decoration: none;">{{mailid}}</a>
+        </div>
+        <!--chart-->
+        <div class="d-none d-lg-inline-block float-end p-0">
+            <div id="columnchart_values" style="width: 400px; height: 200px;"></div>
+        </div>
+    </div>
+    <h1>Announcements</h1>
+    <div class="container text-wrap rounded mt-3">
+        <button class="btn btn-primary my-3 w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><b style="font-size: 1.2em;font-weight: 900;">+</b> New Announcement</button>
+        {% for a in announcement %}
+        <h3>{{a.Heading}}</h3>
+        <p style="display: inline-block;background:rgba(242, 194, 194, 0.8)">{{a.Date}}</p>
+        <p>{{a.Desc}}</p>
+        <a href="{{a.Link}}" target="_blank">{{a.Link}}</a>
+        <section class="border border-bottom"></section>
+        {% endfor %}
+    </div>
+    <div class="d-inline-block container text-wrap rounded my-3 pt-0">
+        <h3 class="text-dark mt-3">Proctor Id</h3>
+        {% if ProctorId %}
+        {{ProctorId}}
+        {% else %}
+        <form action="updatePDb" method="post">
+            {% csrf_token %}
+            <input type="text" maxlength="10" name="ProctorId">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+        <section class="border border-bottom"></section>
+        <h3 class="text-dark mt-3">Department</h3>
+        {% if Department %}
+        {{Department}}
+        {% else %}
+        <form action="updatePDb" method="post">
+            {% csrf_token %}
+            <input type="text" name="Department">
+            <input type="submit" class="btn btn-outline-primary" value="Update">
+        </form>
+        {% endif %}
+        <section class="border border-bottom"></section>
+        <h3 class="text-dark mt-3">Students</h3>
+        <!--if data present in Db=>display else form to update Db-->
+        {% if NoofStudents %}
+        {{NoofStudents}}
+        {% endif %}
+        <section class="border border-bottom"></section>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">New Announcement</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form action="Announce" method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="announceHead" class="form-label">Announcement Heading</label>
+            <input type="text" class="form-control bg-light" id="announceHead" required name="announceHead" placeholder="Announcement heading">
+          </div>
+          <div class="mb-3">
+            <label for="announceDesc" class="form-label">Announcement Description</label>
+            <textarea class="form-control bg-light" id="announceDesc" name="announceDesc" required rows="10" placeholder="Announcement description"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="announceLink" class="form-label">Link</label>
+            <input type="text" class="form-control bg-light" id="announceLink" name="announceLink" placeholder="Link">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Announce</button>
+      </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.getElementById('pprofilepic').addEventListener('change', function checkSize(){
+        var input = document.getElementById('pprofilepic');
+        var btn = document.getElementById('saveImgbtn');
+        if (!input.files) {
+            console.error("This browser doesn't seem to support the `files` property of file inputs.");
+        }
+        else {
+            var file = input.files[0];
+            if (file.size > 30*1024){
+                btn.disabled = true;
+                alert("File too large\nFile size should be less than 30Kb");
+            }
+            else{
+                btn.disabled = false;
+            }
+        }
+    });
+</script>
+{% endblock %}

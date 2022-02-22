@@ -1,0 +1,80 @@
+{% extends 'Login/Login.html' %}
+<!--details-->
+{% block title %}Details{% endblock %}
+{% block body6 %}
+<div class="container col-lg-6 col-md-6 col-sm-12">
+    <h1>Please fill in your details</h1>
+    <form action="details" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input required type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="USN" class="form-label">USN</label>
+            <input required type="text" maxlength="10" class="form-control" id="USN" name="USN">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input required type="date" class="form-control" id="dob" name="dob">
+        </div>
+        <div class="mb-3">
+        <label for="blood" class="form-label">Blood Group</label>
+        <input required class="form-control" list="datalistOptions" id="blood" name="blood" placeholder="Select your Blood group">
+        <datalist id="datalistOptions">
+            <option value="A+">
+            <option value="A-">
+            <option value="B+">
+            <option value="B-">
+            <option value="O+">
+            <option value="O-">
+            <option value="AB+">
+            <option value="AB-">
+        </datalist>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input required type="number" maxlength="10" class="form-control" id="phone" name="phone">
+        </div>
+        <div class="mb-3">
+            <label for="proctor" class="form-label">Proctor</label>
+            <input required class="form-control" list="datalistOptions1" id="proctor" name="proctor" placeholder="Select your Proctor">
+            <datalist id="datalistOptions1">
+                {% for i in proctorlist %}
+                <option value="{{i.Name}}">
+                {% endfor %}
+            </datalist>
+        </div>
+        <div class="mb-3">
+            <label for="branch" class="form-label">Branch</label>
+            <input required type="text" maxlength="10" class="form-control" id="branch" name="branch" value="ISE">
+        </div>
+        <div class="mb-3">
+            <label for="semester" class="form-label">Semester</label>
+            <input required class="form-control" list="datalistOptions2" id="semester" name="semester" placeholder="Select your semester">
+            <datalist id="datalistOptions2">
+                <option value="1">
+                <option value="2">
+                <option value="3">
+                <option value="4">
+                <option value="5">
+                <option value="6">
+                <option value="7">
+                <option value="8">
+            </datalist>
+        </div>
+        <div class="mb-3">
+            <label for="section" class="form-label">Section</label>
+            <input required class="form-control" list="datalistOptions3" id="section" name="section" placeholder="Select your section">
+            <datalist id="datalistOptions3">
+                <option value="A">
+                <option value="B">
+                <option value="C">
+                <option value="D">
+                <option value="E">
+            </datalist>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

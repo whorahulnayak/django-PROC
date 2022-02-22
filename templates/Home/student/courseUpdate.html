@@ -1,0 +1,95 @@
+{% extends 'Home/studentHome.html' %}
+
+{% block activem %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+
+{% block body %}
+
+<div class="container col-lg-6 col-md-6 col-sm-12">
+    {% if sem == "0" %}
+    <form action="Supplementary" method="post" class="mt-3">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+        <span class="input-group-text">Semester</span>
+        <input type="number" class="form-control" min="1" max="8" onchange="inpcolor()" placeholder="Semester" name="Semester" required>
+    </div>
+    {% else %}
+    <h1 class="border-bottom border-2 border-secondary">Semester {{sem}} - Courses</h1>
+    <form action="updateCDb" method="post">
+    {% csrf_token %}
+    {% endif %}
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 1</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course1" required>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 2</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course2" required>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 3</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course3" required>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 4</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course4" required>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 5</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course5">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 6</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course6">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 7</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course7">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 8</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course8">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 9</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course9">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Course code 10</span>
+        <input type="text" class="form-control" onchange="inpcolor()" maxlength="10" placeholder="19IS3ABCDE" name="{{sem}}course10">
+    </div>
+    <button class="btn btn-primary" type="submit" onclick="checkEmpty()">Update courselist</button>
+</form>
+</div>
+<script>
+    function checkEmpty(){
+        var w = document.getElementsByClassName("form-control")[0].value;
+        var x = document.getElementsByClassName("form-control")[1].value;
+        var y = document.getElementsByClassName("form-control")[2].value;
+        var z = document.getElementsByClassName("form-control")[3].value;
+        if(w=="" || x=="" || y=="" || z==""){
+            alert('Please fill in all courses');
+        }
+        else{
+            document.querySelectorAll('form').submit();
+            window.close();
+        }
+    }
+
+    function inpcolor(){
+        var span = document.getElementsByTagName('span');
+        var inp = document.getElementsByTagName('input');
+        for(var i=1;i<inp.length;i++){
+            if(inp[i].value != ""){
+                span[i].style.backgroundColor = "#f3fcfd";
+                inp[i].style.backgroundColor = "#E8F0FE";
+            }
+            else{
+                span[i].style.backgroundColor = "#E9ECEF";
+                inp[i].style.backgroundColor = "#fff";
+            }
+        }
+    }
+    
+</script>
+
+{% endblock %}

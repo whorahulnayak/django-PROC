@@ -1,0 +1,68 @@
+{% extends 'Home/proctorHome.html' %}
+
+{% block head %}
+<style>
+    .card.float-lg-end.float-sm-none.mx-lg-5.mb-3{
+        width: 18rem;
+        background:#f3fcfd;
+    }
+    @media (max-width: 991.98px){
+        .card.float-lg-end.float-sm-none.mx-lg-5.mb-3{
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="position-relative">
+    <center><h1 class="d-inline-block mt-2">{{activity.Actname}}</h1></center>
+    <hr class="mx-3 mt-1">
+    <div class="container">
+        <div class="card float-lg-end float-sm-none mx-lg-5 mb-3">
+            <img src="{{ MEDIA_URL }}{{activity.Actimg}}" class="card-img-top" height="250" width="300">
+            <div class="card-body">
+            <h5 class="card-title">{{activity.Name}}</h5>
+            <p class="card-text">{{activity.USN}}</p>
+            <a href="{{activity.Actreport.url}}" target="_blank" class="btn btn-primary">View Report</a>
+            <form action="RejectAct" method="post" class="d-inline-block float-end" onsubmit="return confReject()">
+                {% csrf_token %}
+                <input type="hidden" name="USN" value="{{activity.USN}}">
+                <input type="hidden" name="Actname" value="{{activity.Actname}}">
+                <button type="submit" class="btn btn-danger">Reject</button>
+            </form>
+            </div>
+        </div>
+        <h3 class="mx-lg-5">Type&emsp;&emsp;&nbsp;: <span class="text-success" style="font-family: 'Comfortaa', cursive;">{{activity.Acttype}}</span></h3>
+        <h3 class="mx-lg-5">Date&emsp;&emsp;&nbsp;: <span class="text-success" style="font-family: 'Comfortaa', cursive;">{{activity.Actdate}}</span></h3>
+        <h3 class="mx-lg-5">Duration&nbsp;: <span class="text-success" style="font-family: 'Comfortaa', cursive;">{{activity.Actduration}}</span></h3>
+        <br>
+        <h3 class="mx-lg-5"><u>Description:-</u></h3>
+        <dd class="mx-lg-5">{{activity.Actdesc}}.</dd>
+        <form class="m-lg-5 w-50" action="ViewActivity" method="post">
+            {% csrf_token %}
+            <div class="input-group mt-3">
+                <input type="number" class="form-control w-auto bg-light" min="0" max="50" placeholder="points" name="points" required>
+                <input type="hidden" name="USN" value="{{activity.USN}}">
+                <input type="hidden" name="Actname" value="{{activity.Actname}}">
+                <button class="btn btn-success" type="submit">Grade</button>
+            </div>      
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+    function confReject(){
+        var text = "Do you want to reject this activity?";
+        if (confirm(text) == true) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+</script>
+
+{% endblock %}

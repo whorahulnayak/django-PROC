@@ -1,0 +1,18 @@
+{% extends 'Home/proctor/manage.html' %}
+
+{% block extension %}
+{% if archived %}
+<h2 style="text-align: center;border-bottom: 1px solid black;">Archives</h2>
+{% for student in archived %}
+<form action="ViewStudent" method="post" target="_blank">
+    {% csrf_token %}
+    <h4 class="d-inline-block">{{student.USN}}</h4>
+    <input type="hidden" name="sUSN" value="{{student.USN}}">
+    <button class="d-inline-block btn btn-sm btn-danger float-end" type="submit">View</button>
+    <hr class="my-0">
+</form>
+{% endfor %}
+{% else %}
+<h2 style="text-align: center;">No archives available</h2>
+{% endif %}
+{% endblock %}

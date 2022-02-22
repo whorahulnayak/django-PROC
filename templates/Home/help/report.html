@@ -1,0 +1,145 @@
+{% extends 'Home/help/help.html' %}
+{% load static %}
+
+{% block activea %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+
+{% block head %}
+
+<style>
+    .container.mt-4.p-3 {
+        background: #f0f9ff;
+        border: 1px solid #DEE2E6;
+    }
+    .nav-link{
+        color: #000;
+    }
+    .nav.nav-tabs .nav-link.active{
+        background: #F3FCFD;
+    }
+    b a{
+        text-decoration: none;
+        color: #0000FF;
+        transition: 0.3s;
+    }
+    b a:hover{
+        color: #F77000;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+<div class="container p-4 px-0">
+    <div class="container">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-report-tab" data-bs-toggle="tab" data-bs-target="#nav-report" type="button" role="tab" aria-controls="nav-report" aria-selected="true">Report Bug</button>
+                <button class="nav-link" id="nav-request-tab" data-bs-toggle="tab" data-bs-target="#nav-request" type="button" role="tab" aria-controls="nav-request" aria-selected="false">Request Admin</button>
+            </div>
+        </nav>
+        <div class="container mt-4 p-3">
+            <div class="tab-content" id="nav-tabContent">
+                <!--Form Report-->
+                <div class="tab-pane fade show active" id="nav-report" role="tabpanel" aria-labelledby="nav-report-tab">
+                    <form class="was-validated" id="form1" action="Reportform" method="post" name="formReport">
+                        {% csrf_token %}
+                        <div class="mb-3 row">
+                            <label for="validationTextarea" class="col-sm-2 col-form-label">BMSCE Mail Id</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control is-invalid" id="validationTextarea" name="EmailId"
+                                    placeholder="Example.is20@bmsce.ac.in" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="validationTextarea" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" maxlength="30" class="form-control is-invalid" id="validationTextarea" name="Name"
+                                    placeholder="Example Name" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="validationTextarea" class="col-sm-2 col-form-label">Bug encountered</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control is-invalid" id="validationTextarea" name="BugDesc"
+                                    placeholder="Description of the bug encountered" rows="3" required></textarea>
+                            </div>
+                        </div>
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Priority of the bug</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="BugPriority" id="inlineRadio1"
+                                        value="Low" checked>
+                                    <label class="form-check-label" for="inlineRadio1">Low</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="BugPriority" id="inlineRadio2"
+                                        value="Medium">
+                                    <label class="form-check-label" for="inlineRadio2">Medium</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="BugPriority" id="inlineRadio3"
+                                        value="High">
+                                    <label class="form-check-label" for="inlineRadio3">High</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="mb-3 row">
+                            <label for="validationTextarea" class="col-sm-2 col-form-label">Attach any relevant images (if
+                                any)</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control is-invalid" id="validationTextarea" name="BugImg"
+                                    placeholder="Description of the bug encountered" accept="image/*">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-4">Report Bug</button>
+                    </form>
+                </div>
+                <!--Form Request-->
+                <div class="tab-pane fade" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
+                    <form class="was-validated" id="form2" action="Reportform" method="post" name="formRequest">
+                    {% csrf_token %}
+                    <div class="mb-3 row">
+                        <label for="validationTextarea" class="col-sm-2 col-form-label">BMSCE Mail Id</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control is-invalid" id="validationTextarea" name="EmailId"
+                                placeholder="Example.is20@bmsce.ac.in" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="validationTextarea" class="col-sm-2 col-form-label">USN</label>
+                        <div class="col-sm-10">
+                            <input type="text" maxlength="10" class="form-control is-invalid" id="validationTextarea" name="USN"
+                                placeholder="1BM20IS155" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="validationTextarea" class="col-sm-2 col-form-label">Update record</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" aria-label="Default select example" name="Record">
+                                <option value="Profile pic" selected>Profile Pic</option>
+                                <option value="Proctor">Proctor</option>
+                                <option value="Email id">Email Id</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="validationTextarea" class="col-sm-2 col-form-label">Other</label>
+                        <div class="col-sm-10">
+                            <input type="text" maxlength="30" class="form-control is-invalid" id="validationTextarea"
+                                placeholder="Other record" name="Other">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-4">Request update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <b>You can also mail <a href="mailto:sourabh.is20@bmsce.ac.in">sourabh.is20@bmsce.ac.in</a> to get in touch</b>
+        <p id="msg"></p>
+    </div>
+</div>
+
+{% endblock %}

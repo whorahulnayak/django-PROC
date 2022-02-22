@@ -1,0 +1,103 @@
+{% extends 'Home/ProctorHome.html' %}
+
+{% block activem %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+
+{% block head %}
+<style>
+    .d-inline-block.container.bg-light.text-wrap.rounded.my-3.pt-0{
+        height: auto;
+    }
+    .z{
+        overflow-x: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="z">
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-dark m-3" id="total-orders">
+                    <div class="card-header">
+                        <h5 class="card-title">Total Students</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{TotalStudents}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-dark m-3" id="orders-delivered">
+                    <div class="card-header">
+                        <h5 class="card-title">New Notifications</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{NoofNots}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-dark m-3" id="orders-pending">
+                    <div class="card-header">
+                        <h5 class="card-title">Archived</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{NoofArchived}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-2">
+        <div class="d-inline-block container text-wrap rounded my-3 pt-0">
+            <form action="Manage" method="post">{% csrf_token %}<div class="col"><button type="submit" class="btn btn-lg btn-primary w-100 my-3" name="0" value="0">Update records</button></div></form>
+            <form action="Manage" method="post">{% csrf_token %}<div class="col"><button type="submit" class="btn btn-lg btn-success w-100 my-3" name="1" value="1">Activities</button></div></form>
+            <form action="Manage" method="post">{% csrf_token %}<div class="col"><button type="submit" class="btn btn-lg btn-warning w-100 my-3" name="2" value="2">Archive</button></div></form>
+            <form action="Manage" method="post">{% csrf_token %}<div class="col"><button type="submit" class="btn btn-lg btn-danger w-100 my-3 position-relative" name="3" value="3">Notifications</button></div></form>
+        </div>
+        <div class="container text-wrap rounded mt-3">
+            {% block extension %}
+            {% if notifications %}
+            <h2 style="text-align: center;border-bottom: 1px solid black;">Notifications</h2>
+            {% for notification in notifications %}
+            <h5 class="d-inline-block mb-0 mt-2">{{notification.Nottype}}</h5>
+            <h5 class="d-inline-block float-end bg-danger bg-opacity-25 mb-0 mt-2">{{notification.Date}}</h5>
+            <p class="m-0">{{notification.Notification}}</p>
+            <hr class="m-0">
+            {% endfor %}
+            {% else %}
+            <h2 style="text-align: center;">No new notifications</h2>
+            {% endif %}
+            {% endblock %}
+        </div>
+        <br>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+
+    window.scrollTo(0,document.body.scrollHeight);
+
+    function toggleCheck(){
+        var all = document.getElementById('studentcheck').querySelectorAll('input[type="checkbox"]');
+        const ref = all[0].checked;
+        for(var i=0; i< all.length;i++){
+            var check = all[i];
+            if(ref == true){
+                check.checked = false;
+            }
+            else{
+                check.checked = true;
+            }
+        }
+    }
+</script>
+{% endblock %}

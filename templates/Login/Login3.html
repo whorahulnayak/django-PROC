@@ -1,0 +1,38 @@
+{% extends 'Login/Login.html' %}
+{% load static %}
+<!--proctor login-->
+{% block title %}Proctor Login{% endblock %}
+{% block body2 %}
+{% for message in messages %}
+<div class="position-absolute alert alert-{{ message.tags }} alert-dismissible fade show w-100" role="alert">
+    <strong>ERROR!!!</strong> {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+    <div class="container py-3 mt-5 text-light" style='max-width: 900px; border-radius: 10px; background: url("{% static "background/rabbit.jpg" %}")'>
+      <h1><b style="color: yellow;">Proctor</b> Sign In</h1>
+      <p>Login into BMSCE ISE proctoring portal</p>
+        <form class="container-sm" action="proctor" method="post">
+          {% csrf_token %}
+          <div class="mt-5 mb-3 mx-5">
+            <label for="mailid" class="form-label">Email address</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control bg-dark text-light opacity-75" id="mailid" required placeholder="bmsce mail id" name="mailid" aria-describedby="basic-addon2">
+              <span class="input-group-text bg-dark text-light" id="basic-addon2">@bmsce.ac.in</span>
+            </div>
+          </div>
+          <div class="mb-3 mx-5">
+            <label for="password" class="form-label">Password</label>
+            <a style="float: right; color:yellow;" href="{% url 'ForgotPassword' %}">Forgot Password?</a>
+            <input type="password" class="form-control bg-dark text-light opacity-75" placeholder="password" required id="password" name="password">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="showPass" onclick="showPassword()">
+              <label class="form-check-label" for="showPass">Show Password</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-warning mx-5 mt-3">Login</button>
+        </form>
+        <h4 class="my-2 mt-5">If any queries or issues kindly contact</h4>
+        <a class="my-2 fs-5 text-warning" href="mailto:sourabh.is20@bmsce.ac.in">sourabh.is20@bmsce.ac.in</a>
+    </div>
+{% endblock %}

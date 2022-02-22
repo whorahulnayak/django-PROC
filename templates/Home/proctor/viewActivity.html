@@ -1,0 +1,19 @@
+{% extends 'Home/proctor/manage.html' %}
+
+{% block extension %}
+{% if activities %}
+<h2 style="text-align: center;border-bottom: 1px solid black;">Activities</h2>
+{% for activity in activities %}
+<form action="ViewActivity" method="post">
+    {% csrf_token %}
+    <h4 class="d-inline-block">{{activity.Actname}}</h4>({{activity.USN}})
+    <input type="hidden" name="USN" value="{{activity.USN}}">
+    <input type="hidden" name="Actname" value="{{activity.Actname}}">
+    <button class="d-inline-block btn btn-sm btn-success float-end" type="submit">View</button>
+    <hr class="my-0">
+</form>
+{% endfor %}
+{% else %}
+<h2 style="text-align: center;">No new activities</h2>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'Home/studentHome.html' %}
+
+{% block activem %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1 class="border-bottom border-2 border-secondary">Semester {{sem}} - Supplementary</h1>
+    <form class="row" action="updateSuppDb" method="post">
+        {% csrf_token %}
+        {% for subject in a %}
+        <div class="col col-lg-6 col-md-12 col-sm-12 col-12 p-4 border-1">
+        <h4>{{ forloop.counter }}. {{subject}}</h4>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Credits</span>
+            <input type="number" class="form-control" placeholder="0" min="0" max="6" name="{{ forloop.counter }}input1" onchange="inpcolor()" required>
+        </div>
+        Re-register&emsp;
+        <div class="form-check form-check-inline mb-2">
+            <input class="form-check-input" type="radio" name="{{ forloop.counter }}input2" id="inlineRadio1" value="No" checked>
+            <label class="form-check-label" for="inlineRadio1">No</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="{{ forloop.counter }}input2" id="inlineRadio2" value="Yes">
+            <label class="form-check-label" for="inlineRadio2">Yes</label>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Attempt Number</span>
+            <input type="number" class="form-control" value="1" min="0" max="5" onchange="inpcolor()" name="{{ forloop.counter }}input3">
+        </div>
+        Withdrawn/Dropped&emsp;
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="{{ forloop.counter }}input4" id="inlineRadio1" value="No" checked>
+            <label class="form-check-label" for="inlineRadio1">No</label>
+        </div>
+        <div class="form-check form-check-inline mb-2">
+            <input class="form-check-input" type="radio" name="{{ forloop.counter }}input4" id="inlineRadio2" value="Yes">
+            <label class="form-check-label" for="inlineRadio2">Yes</label>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Attendence(percentage)</span>
+            <input type="number" class="form-control" placeholder="0" min="0" max="100" name="{{ forloop.counter }}input5" onchange="inpcolor()" required>
+            <span class="input-group-text">%</span>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">CIE(marks)</span>
+            <input type="number" class="form-control" placeholder="0" min="0" max="50" name="{{ forloop.counter }}input6" onchange="inpcolor()" required>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">SEE(grade)</span>
+            <input type="text" maxlength="1" class="form-control" id="seegrade" placeholder="A" name="{{ forloop.counter }}input7" onchange="inpcolor()" required>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Change in grade</span>
+            <input type="text" maxlength="1" class="form-control" value="-" name="{{ forloop.counter }}input8" onchange="inpcolor()" required>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Grade points</span>
+            <input type="number" class="form-control" id="gradepts" placeholder="10" min="0" max="10" name="{{ forloop.counter }}input9" onchange="inpcolor()" required>
+        </div>
+        <input type="text" hidden value="{{subject}}" name="{{ forloop.counter }}course">
+        </div>
+        {% endfor %}
+        <!--Lets also add an option to chage colour based on whether the data is present of not-->
+        <input type="text" hidden value="{{sem}}" name="sem">
+        <button class="btn btn-primary mx-3 mb-3" type="submit">Update record</button>
+    </form>
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+    
+    function inpcolor(){
+        var inp = document.getElementsByTagName('input');
+        for(var i=1;i<inp.length;i++){
+            if(inp[i].value != ""){
+                inp[i].style.backgroundColor = "#E8F0FE";
+            }
+            else{
+                inp[i].style.backgroundColor = "#fff";
+            }
+        }
+    }
+    
+</script>
+{% endblock %}

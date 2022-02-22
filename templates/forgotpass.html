@@ -1,0 +1,115 @@
+{% extends 'Login/Login.html' %}
+
+{% block body %}
+{% for message in messages %}
+<div class="position-absolute alert alert-{{ message.tags }} alert-dismissible fade show w-100" role="alert">
+    <strong>{% if message.tags == "danger" %}ERROR{% else %}SUCCESS{% endif %}!!!</strong> {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<div class="container">
+    {% if email %}
+    <form class="position-absolute top-50 start-50 translate-middle bg-light p-5 rounded" action="ForgotPassword" method="post" onsubmit="return checkSame()">
+        {% csrf_token %}
+        <h3>Welcome <span style="color:#0000FF;">{{email}}</span></h3>
+        <hr>
+        <h4>Please enter your new password</h4>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Password&emsp;<span></span></label>
+          <input type="password" class="form-control" id="exampleInputEmail1" name="NewPass" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail2" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="exampleInputEmail2" name="NewPassConf" required>
+        </div>
+        <div class="mb-3">
+            <em class="my-0">Please check your mail for the code</em><br>
+            <label for="exampleInputEmail3" class="form-label">Secret Code</label>
+            <input type="text" class="form-control" id="exampleInputEmail3" name="secCode" required>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="checkSame()">submit</button>
+    </form>
+    {% else %}
+    <form class="position-absolute top-50 start-50 translate-middle bg-light p-5 rounded" action="ForgotPassword" method="post">
+        {% csrf_token %}
+        <h3>Please Enter your BMSCE Email Id</h3>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail4" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail4" name="EmailId" required>
+        </div>
+        <input type="hidden" name="forgotPass1" value="az">
+        <button type="submit" class="btn btn-primary">Get Secret Code</button>
+      </form>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    var NewPass = document.getElementById("exampleInputEmail1");
+    var NewPassConf = document.getElementById("exampleInputEmail2");
+    var msg = document.getElementsByTagName("span")[1];
+    var submit = document.getElementsByTagName("button")[0];
+    NewPass.addEventListener("keyup", function(){checkpassword(NewPass.value)})
+    function checkpassword(password){
+        var strength=0;
+        if (password.match(/[a-z]+/)){
+        strength+=1;
+        }
+        if (password.match(/[A-Z]+/)){
+        strength+=1;
+        }
+        if (password.match(/[0-9]+/)){
+        strength+=1;
+        }
+        if (password.match(/[$@#&!]+/)){
+        strength+=1;
+        }
+        if (password.length<8){
+        submit.disabled = true;
+        }
+        if (password.length>12){
+        alert("Maximum number of characters is 12");
+        submit.disabled = true;
+        }
+        switch(strength){
+        case 1:
+        msg.innerText = "Weak";
+        msg.style.color = "#DC3545";
+        submit.disabled = true;
+        break;
+
+        case 2:
+        msg.innerText = "Weak";
+        msg.style.color = "#DC3545";
+        submit.disabled = true;
+        break;
+
+        case 3:
+        msg.innerText = "Moderate";
+        msg.style.color = "#FFC107";
+        submit.disabled = false;
+        break;
+
+        case 4:
+        msg.innerText = "Strong";
+        msg.style.color = "#198754";
+        submit.disabled = false;
+        break;
+        }
+    }
+    function checkSame(){
+        if(NewPass.value == NewPassConf.value){
+            return true;
+        }
+        else{
+            msg.innerText = "Password doesn't match";
+            msg.style.color = "#DC3545";
+            return false;
+        }
+    }
+</script>
+
+{% endblock %}

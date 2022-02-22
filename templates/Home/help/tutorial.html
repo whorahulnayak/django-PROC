@@ -1,0 +1,197 @@
+{% extends 'Home/help/help.html' %}
+{% load static %}
+
+{% block activem %}text-primary bg-info bg-opacity-10 border-bottom border-primary{% endblock %}
+
+{% block head %}
+
+<style>
+    .container.mt-4.p-3.pt-1 {
+        background: #EEEEEE;
+    }
+
+    .nav-link {
+        color: #000;
+    }
+
+    .nav.nav-tabs .nav-link.active {
+        background: #F3FCFD;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container p-4">
+    <div class="container px-lg-5 mt-3">
+        <h2 class="display-4 text-center">Tutorial</h2>
+        <hr>
+        <p>In case you face any problem while accessing the Virtual Programming Lab platform please go through the
+            stepwise guided tutorial below.
+            The guided instructions should be able to solve your issue. If the problem persists,
+            despite following the guide please contact the respective faculty to guide you with the same or you can<a
+                href="{% url 'Report' %}">
+                report the problem.
+            </a>
+        </p>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-signup-tab" data-bs-toggle="tab" data-bs-target="#nav-signup"
+                    type="button" role="tab" aria-controls="nav-signup" aria-selected="true">Signup</button>
+                <button class="nav-link" id="nav-login-tab" data-bs-toggle="tab" data-bs-target="#nav-login"
+                    type="button" role="tab" aria-controls="nav-login" aria-selected="false">Login</button>
+                <button class="nav-link" id="nav-records-tab" data-bs-toggle="tab" data-bs-target="#nav-records"
+                    type="button" role="tab" aria-controls="nav-records" aria-selected="false">Records</button>
+            </div>
+        </nav>
+        <hr class="mx-3">
+        <div class="container mt-4 p-3 pt-1">
+            <div class="tab-content" id="nav-tabContent">
+
+                <div class="tab-pane fade show active" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Landing Page</h6>
+                        <p class="col-12">This is the first page you will see when you enter the website. Signup with your bmsce mail
+                            id to continue.</p>
+                            <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/landing.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Signup Page</h6>
+                        <p class="col-12">On clicking the SignUp button, you will be redirected to the following page. 
+                            Create an account with your BMSCE mail id by entering the secret key given by your proctor.</p>
+                            <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/signup.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Student details</h6>
+                        <p class="col-12">Once successfully signed up, you will be redirected to fill in your details. 
+                            Fill in all the details appropriately.(If any changes, you can request your proctor directly or the admin
+                             from the report tab <a href="/Report#nav-request-tab" style="text-decoration: none;">Request admin</a>)
+                        </p>
+                        <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/signup_details.png' %}">
+                    </div>
+                    <p>The signup process is completed and you will be redirected to your dashboard.</p>
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark" onclick="Prev()" disabled>Previous</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark float-end" onclick="Next('signup','login')">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Login Page</h6>
+                        <p class="col-12">Enter your BMSCE mail id and password to login to your account.</p>
+                            <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/login.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Forgot password</h6>
+                        <p class="col-12">You can reset your password by clicking on the forgot password option.
+                        </p>
+                            <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/forgotpass.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Reset password</h6>
+                        <p class="col-12">Once you enter your registered mail id, you will recieve an OTP through your BMSCE mail id.
+                            Use the OTP to reset your password.
+                        </p>
+                        <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/changepass.png' %}">
+                    </div>
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Dashboard</h6>
+                        <p class="col-12">This is the first page you will see after you've successfully logged in. Your details are visiblle on this page.</p>
+                            <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/dashboard.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark" onclick="Prev('login','signup')">Previous</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark float-end" onclick="Next('login','records')">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-records" role="tabpanel" aria-labelledby="nav-records-tab">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Uploading profile picture</h6>
+                        <p class="col-12">Profile picture can be update once by clicking on the profile picture icon.
+                            The image should be of type Portrait photo with red background(as per dept. instructions) and less than 30Kb in size.
+                        </p>
+                        <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/profilepic.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Activites page</h6>
+                        <p class="col-12">New activities can be updated on the activities page. Activites are 
+                            verified and graded by the respective proctor.
+                        </p>
+                            <img class="col-12 img-fluid" alt="img" src="{% static 'other/tutorial/activities.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Records page</h6>
+                        <p class="col-12">Records can be updated only once. Students are required to update the courses
+                             selected by them.
+                        </p>
+                        <img class="col-12 col-md-6 img-fluid" alt="img" src="{% static 'other/tutorial/records_page.png' %}">
+                        <img class="col-12 col-md-6 img-fluid" alt="img" src="{% static 'other/tutorial/update_courses.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row row-content mt-4">
+                        <h6 class="col-12">Updating records</h6>
+                        <p class="col-12">After updating the courses, you will be allowed to update the records for all the courses(only once).
+                             The records are then visible as a table for each Semester.
+                        </p>
+                        <img class="col-12 col-md-6 img-fluid" alt="img" src="{% static 'other/tutorial/update_records.png' %}">
+                        <img class="col-12 col-md-6 img-fluid" alt="img" src="{% static 'other/tutorial/records.png' %}">
+                    </div><hr class="mx-3">
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark" onclick="Prev('records','login')">Previous</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark float-end" onclick="Next()" disabled>Next</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    function Prev(a,b){
+        var c = a;
+        var p = b;
+        var current = document.getElementById(`nav-${c}-tab`);
+        var currentPane = document.getElementById(`nav-${c}`);
+        var prev = document.getElementById(`nav-${p}-tab`);
+        var prevPane = document.getElementById(`nav-${p}`);
+        document.documentElement.scrollTop = 0;
+        current.classList.remove('active');
+        prev.classList.add('active');
+        currentPane.classList.remove('active','show');
+        prevPane.classList.add('show','active');
+    }
+    function Next(a,b){
+        var c = a;
+        var n = b;
+        var current = document.getElementById(`nav-${c}-tab`);
+        var currentPane = document.getElementById(`nav-${c}`);
+        var next = document.getElementById(`nav-${n}-tab`);
+        var nextPane = document.getElementById(`nav-${n}`);
+        document.documentElement.scrollTop = 0;
+        current.classList.remove('active');
+        next.classList.add('active');
+        currentPane.classList.remove('active','show');
+        nextPane.classList.add('show','active');
+    }
+</script>
+
+{% endblock %}
