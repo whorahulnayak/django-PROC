@@ -30,7 +30,7 @@ SECRET_KEY = '87==$(#G`U6GEG&>?]*6`[E0XKPP3[_}=+15\:&1}M,XA9PR=V'
 #87==$(#G`U6GEG&>?]*6`[E0XKPP3[_}=+15\:&1}M,XA9PR=V
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
