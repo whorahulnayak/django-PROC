@@ -482,13 +482,13 @@ def pStudentlist(request):
         #differentiate into diff years
         for j in range(0,len(details)):
             if int(details[j].USN[3:5]) == x:
-                Y4.append(details[j])
-            elif int(details[j].USN[3:5]) == x-1:
-                Y3.append(details[j])
-            elif int(details[j].USN[3:5]) == x-2:
-                Y2.append(details[j])
-            else:
                 Y1.append(details[j])
+            elif int(details[j].USN[3:5]) == x-1:
+                Y2.append(details[j])
+            elif int(details[j].USN[3:5]) == x-2:
+                Y3.append(details[j])
+            else:
+                Y4.append(details[j])
         context = {"Y1":Y1,"Y2":Y2,"Y3":Y3,"Y4":Y4}
         return render(request, 'Home/proctor/studentlist.html', context)
 
