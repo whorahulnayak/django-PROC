@@ -30,7 +30,7 @@ SECRET_KEY = '87==$(#G`U6GEG&>?]*6`[E0XKPP3[_}=+15\:&1}M,XA9PR=V'
 #87==$(#G`U6GEG&>?]*6`[E0XKPP3[_}=+15\:&1}M,XA9PR=V
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -169,10 +169,10 @@ EMAIL_HOST_PASSWORD = 'lleewcjqparpojmf'
 
 django_heroku.settings(locals())
 
-CSRF_COOKIE_SECURE = True #to avoid transmitting the CSRF cookie over HTTP accidentally.
-SESSION_COOKIE_SECURE = True #to avoid transmitting the session cookie over HTTP accidentally.
+# CSRF_COOKIE_SECURE = True #to avoid transmitting the CSRF cookie over HTTP accidentally.
+# SESSION_COOKIE_SECURE = True #to avoid transmitting the session cookie over HTTP accidentally.
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
 
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
