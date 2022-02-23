@@ -30,7 +30,7 @@ SECRET_KEY = '87==$(#G`U6GEG&>?]*6`[E0XKPP3[_}=+15\:&1}M,XA9PR=V'
 #87==$(#G`U6GEG&>?]*6`[E0XKPP3[_}=+15\:&1}M,XA9PR=V
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -135,7 +135,7 @@ STATICFILES_DIRS =  [
     os.path.join(BASE_DIR,'static')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'assets')
-# STATIC_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATIC_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
 # Default primary key field type
@@ -165,7 +165,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sourabh.is20@bmsce.ac.in'
 EMAIL_HOST_PASSWORD = 'lleewcjqparpojmf'
 
-#zbavrklbumsocils
+#lleewcjqparpojmf
 
 django_heroku.settings(locals())
 
@@ -176,43 +176,3 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 SECURE_SSL_REDIRECT = True
-
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
-                       'pathname=%(pathname)s lineno=%(lineno)s ' +
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'testlogger': {
-            'handlers': ['console'],
-            'level': 'INFO',
-        }
-    }
-}
-
-DEBUG_PROPAGATE_EXCEPTIONS = True
-COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
